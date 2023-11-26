@@ -15,11 +15,27 @@ def loadCompetitions():
         return listOfCompetitions
 
 
+def verifyCompetitionDate(competition_date):
+    try:
+        format_date = datetime.strptime(competition_date, '%Y-%m-%d %H:%M:%S')
+    except ValueError:
+        print(" date érronée ou non au format: '%Y-%m-%d %H:%M:%S'")
+        return False
+    date_now = datetime.now()
+
+    if format_date > date_now:
+        return True
+    return False
+
+
 app = Flask(__name__)
 app.secret_key = "something_special"
 
 competitions = loadCompetitions()
 clubs = loadClubs()
+
+for comp in competitions:
+    comp['IsFuturComp'] = verifyCompetitionDate(comp['date'])
 
 
 @app.route("/")
@@ -112,19 +128,6 @@ def purchasePlaces():
         )
     flash("Great-booking complete!")
     return render_template("welcome.html", club=club, competitions=competitions), 200
-
-
-def verifyCompetitionDate(competition_date):
-    try:
-        format_date = datetime.strptime(competition_date, '%Y-%m-%d %H:%M:%S')
-    except ValueError:
-        print(" date érronée ou non au format: '%Y-%m-%d %H:%M:%S'")
-        return False
-    date_now = datetime.now()
-
-    if format_date > date_now:
-        return True
-    return False
 
 
 # TODO: Add route for points display
