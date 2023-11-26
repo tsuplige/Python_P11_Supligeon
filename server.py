@@ -100,7 +100,6 @@ def purchasePlaces():
         and placesRequired <= 12
         and placesRequired <= int(competition["numberOfPlaces"])
     ):
-        club["points"] = str(int(club["points"]) - placesRequired)
         competition["numberOfPlaces"] = (
             int(competition["numberOfPlaces"]) - placesRequired
         )
