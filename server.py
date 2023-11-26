@@ -61,7 +61,6 @@ def purchasePlaces():
     placesRequired = int(request.form['places'])
     print(club)
     if int(club['points']) - placesRequired >= 0:
-        club['points'] = str(int(club['points']) - placesRequired)
         competition['numberOfPlaces'] = int(competition[
             'numberOfPlaces'])-placesRequired
     else:
