@@ -114,6 +114,19 @@ def purchasePlaces():
     return render_template("welcome.html", club=club, competitions=competitions), 200
 
 
+def verifyCompetitionDate(competition_date):
+    try:
+        format_date = datetime.strptime(competition_date, '%Y-%m-%d %H:%M:%S')
+    except ValueError:
+        print(" date érronée ou non au format: '%Y-%m-%d %H:%M:%S'")
+        return False
+    date_now = datetime.now()
+
+    if format_date > date_now:
+        return True
+    return False
+
+
 # TODO: Add route for points display
 
 
