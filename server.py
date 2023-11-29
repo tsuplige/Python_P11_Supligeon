@@ -54,6 +54,7 @@ def book(competition, club):
 
 @app.route("/purchasePlaces", methods=["POST"])
 def purchasePlaces():
+<<<<<<< HEAD
     try:
         club = [c for c in clubs if c["name"] == request.form["club"]][0]
     except IndexError:
@@ -102,6 +103,16 @@ def purchasePlaces():
                             competitions=competitions),
             403,
         )
+=======
+    competition = [c for c in competitions if c['name'] ==
+                   request.form['competition']][0]
+    club = [c for c in clubs if c['name'] == request.form['club']][0]
+    placesRequired = int(request.form['places'])
+    print(club)
+    if int(club['points']) - placesRequired >= 0:
+        competition['numberOfPlaces'] = int(competition[
+            'numberOfPlaces'])-placesRequired
+>>>>>>> bug/club_point_management
     else:
         flash(
             f"The club does not have enough " f"points to order {placesRequired} seats."
