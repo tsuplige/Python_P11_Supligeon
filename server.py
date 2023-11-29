@@ -15,11 +15,27 @@ def loadCompetitions():
         return listOfCompetitions
 
 
+def verifyCompetitionDate(competition_date):
+    try:
+        format_date = datetime.strptime(competition_date, '%Y-%m-%d %H:%M:%S')
+    except ValueError:
+        print(" date érronée ou non au format: '%Y-%m-%d %H:%M:%S'")
+        return False
+    date_now = datetime.now()
+
+    if format_date > date_now:
+        return True
+    return False
+
+
 app = Flask(__name__)
 app.secret_key = "something_special"
 
 competitions = loadCompetitions()
 clubs = loadClubs()
+
+for comp in competitions:
+    comp['IsFuturComp'] = verifyCompetitionDate(comp['date'])
 
 
 @app.route("/")
@@ -85,7 +101,6 @@ def purchasePlaces():
         and placesRequired <= 12
         and placesRequired <= int(competition["numberOfPlaces"])
     ):
-        club["points"] = str(int(club["points"]) - placesRequired)
         competition["numberOfPlaces"] = (
             int(competition["numberOfPlaces"]) - placesRequired
         )
