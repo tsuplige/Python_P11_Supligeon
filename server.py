@@ -42,8 +42,12 @@ for comp in competitions:
 def index():
     return render_template("index.html")
 
+@app.route("/board")
+def pointBoard():
+    return render_template('board.html', clubs=clubs)
 
-@app.route("/showSummary", methods=["POST"])
+
+@app.route('/showSummary', methods=['POST'])
 def showSummary():
     try:
         club = [club for club in clubs if club["email"] == request.form["email"]][0]

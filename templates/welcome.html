@@ -21,7 +21,7 @@
         {% for comp in competitions%}
         <li>
             {{comp['name']}}<br />
-            Date: {{comp['date']}}</br>
+            Date: {{comp['date']}}<br />
             Number of Places: {{comp['numberOfPlaces']}}
             {%if comp['numberOfPlaces']|int >0%}
                 {% if comp['IsFuturComp'] %}
