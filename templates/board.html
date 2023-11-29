@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Point Board || GUDLFT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h2>Club Point Board</h2>
+    <a href="/">return to Login <br></a>
+   <table>
+    <thead>
+      <tr>
+          <th style="border: solid;">Club</th>
+          <th style="border: solid;">Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for club in clubs %}
+        <tr>
+          <th style="border: solid;">{{club.name}}</th>
+          <th style="border: solid;">{{club.points}}</th>
+        </tr>
+      {% endfor %}
+    </tbody>
+   </table>
+</body>
+</html>

@@ -26,6 +26,11 @@ def index():
     return render_template('index.html')
 
 
+@app.route("/board")
+def pointBoard():
+    return render_template('board.html', clubs=clubs)
+
+
 @app.route('/showSummary', methods=['POST'])
 def showSummary():
 

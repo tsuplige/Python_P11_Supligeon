@@ -12,5 +12,19 @@
     {   "name":"She Lifts",
         "email": "kate@shelifts.co.uk",
         "points":"12"
+    },
+    {
+        "name":"gim gim club",
+        "email":"clark@gimgim.fr",
+        "points":"10"
+    },
+    {
+        "name":"Better and Stronger",
+        "email": "admin@bands.com",
+        "points":"2"
+    },
+    {   "name":"Sir Musculo",
+        "email": "jake@musculo.en",
+        "points":"17"
     }
 ]}
