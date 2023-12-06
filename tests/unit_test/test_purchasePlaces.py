@@ -18,6 +18,15 @@ def test_purchase_places_without_enough_point(client):
     assert b"The club does not have enough points to order" in response.data
 
 
+def test_purchase_places_without_point_data(client):
+    data = {"club": "Simply Lift",
+            "competition": "Spring Festival"}
+    response = client.post("/purchasePlaces", data=data)
+
+    assert response.status_code == 404
+    assert b"number places not found" in response.data
+
+
 def test_purchase_more_than_12_places(client):
     data = {"club": "Simply Lift",
             "competition": "Spring Festival",
