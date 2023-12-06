@@ -115,6 +115,8 @@ def purchasePlaces():
                             competitions=competitions),
             400,
         )
+    except KeyError:
+        flash("number places not found")
     if (
         int(club["points"]) - placesRequired >= 0
         and placesRequired <= 12
