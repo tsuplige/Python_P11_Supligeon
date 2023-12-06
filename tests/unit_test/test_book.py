@@ -13,6 +13,14 @@ def test_book_with_bad_link(client):
     assert response.status_code == 404
 
 
+def test_book_for_past_competition(client):
+
+    response = client.get('/book/Fall%20Classic/Simply%20Lift')
+    assert (b"It is not possible to book "
+            b"places for a past competition." in response.data)
+    assert response.status_code == 403
+
+
 def test_book_with_empty_link(client):
 
     response = client.get('/book')
