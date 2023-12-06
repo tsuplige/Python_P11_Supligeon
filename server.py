@@ -67,9 +67,19 @@ def book(competition, club):
         foundCompetition = ([c for c in competitions if c["name"] ==
                             competition][0])
         if foundClub and foundCompetition:
-            return render_template(
-                "booking.html", club=foundClub, competition=foundCompetition
-            )
+            if verifyCompetitionDate(foundCompetition['date']):
+                return render_template(
+                    "booking.html",
+                    club=foundClub,
+                    competition=foundCompetition
+                )
+            else:
+                flash("It is not possible to book places for a past competition.")
+                return render_template(
+                    "welcome.html",
+                    club=foundClub,
+                    competitions=competitions
+                ), 403
     except IndexError:
         flash("Something went wrong-please try again")
         return render_template("welcome.html", club=club,
