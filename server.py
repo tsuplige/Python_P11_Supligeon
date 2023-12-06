@@ -74,7 +74,8 @@ def book(competition, club):
                     competition=foundCompetition
                 )
             else:
-                flash("It is not possible to book places for a past competition.")
+                flash("It is not possible to book"
+                      " places for a past competition.")
                 return render_template(
                     "welcome.html",
                     club=foundClub,
@@ -117,6 +118,11 @@ def purchasePlaces():
         )
     except KeyError:
         flash("number places not found")
+        return (
+            render_template("welcome.html", club=club,
+                            competitions=competitions),
+            404,
+        )
     if (
         int(club["points"]) - placesRequired >= 0
         and placesRequired <= 12
