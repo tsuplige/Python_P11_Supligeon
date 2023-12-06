@@ -51,7 +51,8 @@ def pointBoard():
 @app.route('/showSummary', methods=['POST'])
 def showSummary():
     try:
-        club = [club for club in clubs if club["email"] == request.form["email"]][0]
+        club = ([club for club in clubs if club["email"] ==
+                 request.form["email"]][0])
         return render_template("welcome.html", club=club,
                                competitions=competitions)
     except IndexError:
@@ -61,16 +62,18 @@ def showSummary():
 
 @app.route("/book/<competition>/<club>")
 def book(competition, club):
-    foundClub = [c for c in clubs if c["name"] == club][0]
-    foundCompetition = [c for c in competitions if c["name"] == competition][0]
-    if foundClub and foundCompetition:
-        return render_template(
-            "booking.html", club=foundClub, competition=foundCompetition
-        )
-    else:
+    try:
+        foundClub = [c for c in clubs if c["name"] == club][0]
+        foundCompetition = ([c for c in competitions if c["name"] ==
+                            competition][0])
+        if foundClub and foundCompetition:
+            return render_template(
+                "booking.html", club=foundClub, competition=foundCompetition
+            )
+    except IndexError:
         flash("Something went wrong-please try again")
         return render_template("welcome.html", club=club,
-                               competitions=competitions)
+                               competitions=competitions), 404
 
 
 @app.route("/purchasePlaces", methods=["POST"])
@@ -88,7 +91,9 @@ def purchasePlaces():
     except IndexError:
         flash("The competition does not exist in database")
         return (
-            render_template("welcome.html", club=club, competitions=competitions),
+            render_template("welcome.html",
+                            club=club,
+                            competitions=competitions),
             404,
         )
     try:
@@ -100,6 +105,8 @@ def purchasePlaces():
                             competitions=competitions),
             400,
         )
+    except KeyError:
+        flash("number places not found")
     if (
         int(club["points"]) - placesRequired >= 0
         and placesRequired <= 12
@@ -110,7 +117,7 @@ def purchasePlaces():
             int(competition["numberOfPlaces"]) - placesRequired
         )
     elif placesRequired > 12:
-        flash("you can't purchase more than 12 places")
+        flash("you cannot purchase more than 12 places")
         return (
             render_template("welcome.html", club=club,
                             competitions=competitions),
@@ -125,14 +132,19 @@ def purchasePlaces():
         )
     else:
         flash(
-            f"The club does not have enough " f"points to order {placesRequired} seats."
+            f"The club does not have enough "
+            f"points to order {placesRequired} seats."
         )
         return (
-            render_template("welcome.html", club=club, competitions=competitions),
+            render_template("welcome.html",
+                            club=club,
+                            competitions=competitions),
             403,
         )
-    flash("Great-booking complete!")
-    return render_template("welcome.html", club=club, competitions=competitions), 200
+    flash(f"Great-booking complete! You buy {placesRequired} places !")
+    return render_template("welcome.html",
+                           club=club,
+                           competitions=competitions), 200
 
 
 # TODO: Add route for points display
